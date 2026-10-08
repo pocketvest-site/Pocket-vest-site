@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketVest - Micro-Investing Made Simple</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Pocket<span>Vest</span></a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#calculator">Growth Calculator</a>
+                <a href="#faq">FAQs</a>
+            </nav>
+            <button id="open-signup-btn" class="btn btn-primary">Get Started</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="badge">Start Small, Grow Big</span>
+                <h1>Build Wealth with Just <span>$5 USD</span></h1>
+                <p>Welcome to PocketVest. We believe investing should be accessible to everyone. Start your micro-investing journey today with a minimum deposit of just five dollars.</p>
+                <div class="hero-actions">
+                    <button id="hero-signup-btn" class="btn btn-primary">Start Investing</button>
+                    <a href="#calculator" class="btn btn-secondary">Try Calculator</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="mockup-card">
+                    <h3>Account Balance</h3>
+                    <div class="balance">$1,245.80</div>
+                    <div class="growth">+12.4% This Year</div>
+                    <div class="card-footer">Minimum Deposit: $5.00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <h2 class="section-title">See Your Potential Growth</h2>
+            <p class="section-subtitle">Play with the numbers to visualize how small, regular contributions can accumulate over time through compounding interest.</p>
+            
+            <div class="calc-container">
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label for="initial-deposit">Initial Deposit ($ USD)</label>
+                        <input type="number" id="initial-deposit" value="5" min="5">
+                        <small>Minimum required: $5.00</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="monthly-contribute">Monthly Contribution ($)</label>
+                        <input type="number" id="monthly-contribute" value="25" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="years">Time Horizon (Years)</label>
+                        <input type="range" id="years" min="1" max="30" value="10">
+                        <div class="range-val"><span id="years-val">10</span> years</div>
+                    </div>
+                    <div class="input-group">
+                        <label for="return-rate">Estimated Annual Return (%)</label>
+                        <input type="range" id="return-rate" min="1" max="15" value="8">
+                        <div class="range-val"><span id="rate-val">8</span>%</div>
+                    </div>
+                </div>
+                <div class="calc-results">
+                    <h3>Projected Total Portfolio</h3>
+                    <div class="total-result" id="total-result">$3,995.74</div>
+                    <div class="breakdown">
+                        <p>Total Principal Invested: <strong id="total-principal">$3,005.00</strong></p>
+                        <p>Estimated Interest Earned: <strong id="total-interest">$990.74</strong></p>
+                    </div>
+                    <small class="calc-note">*Calculated using monthly compounding models.</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Why is the minimum deposit only $5?</h3>
+                    <p>We designed this platform to break down traditional barriers to financial markets. By allowing micro-investments, anyone can start practicing smart financial habits without needing massive upfront capital.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How are my assets managed?</h3>
+                    <p>Deposits are allocated into diversified exchange-traded funds (ETFs) managed by institutions. Your portfolio automatically adjusts to your selected risk preference.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is my money locked down?</h3>
+                    <p>No. Standard micro-investing platforms allow you to request a withdrawal at any time. Standard brokerage processing speeds apply, meaning funds typically settle back to your bank account within 3 to 5 business days.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Are returns guaranteed?</h3>
+                    <p>No. All market investing carries inherent risks, and portfolios can gain or lose value based on real-market fluctuations. We recommend long-term horizons to ride out market cycles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration & Security Modal Overlay -->
+    <div id="signup-modal" class="modal-overlay">
+        <div class="modal-box">
+            <button id="close-modal-btn" class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h2>Create Your Account</h2>
+                <p>Set up your profile and security credentials to get started.</p>
+            </div>
+            
+            <form id="registration-form" class="modal-form">
+                <!-- Basic Credentials -->
+                <div class="input-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" required placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="john@example.com">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="••••••••" minlength="8">
+                </div>
+
+                <!-- Strategic/Risk Profile Preferences -->
+                <div class="input-group">
+                    <label for="risk-profile">Investment Risk Horizon</label>
+                    <select id="risk-profile">
+                        <option value="conservative">Conservative (Low Volatility / Bonds)</option>
+                        <option value="moderate" selected>Moderate Balanced (Default Growth Portfolio)</option>
+                        <option value="aggressive">Aggressive (High-Growth Equity Orientation)</option>
+                    </select>
+                </div>
+
+                <!-- Interactive Security Toggles -->
+                <div class="security-panel">
+                    <h4>Account Security Layers</h4>
+                    <div class="toggle-container">
+                        <div class="toggle-text">
+                            <strong>Enable Multi-Factor Authentication (2FA)</strong>
+                            <p>Protect account assets by requiring an authenticator code upon signing in.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="tfa-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-container">
+                        <div class="toggle-text">
+                            <strong>Biometric Login Prompt</strong>
+                            <p>Request FaceID or fingerprint access verification on supported devices.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="biometric-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Confirm & Initialize Portfolio</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 PocketVest Technologies Inc. All rights reserved.</p>
+            <p class="disclaimer">Disclaimer: All investing involves risk, including the possible loss of money you invest. Compound interest projections are hypothetical models and do not guarantee future performance outcomes.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
