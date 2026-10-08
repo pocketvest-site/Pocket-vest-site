@@ -1,0 +1,111 @@
+// Grab DOM elements
+const initialInput = document.getElementById('initial-deposit');
+const monthlyInput = document.getElementById('monthly-contribute');
+const yearsInput = document.getElementById('years');
+const rateInput = document.getElementById('return-rate');
+
+const yearsVal = document.getElementById('years-val');
+const rateVal = document.getElementById('rate-val');
+
+const totalResult = document.getElementById('total-result');
+const totalPrincipalDisplay = document.getElementById('total-principal');
+const totalInterestDisplay = document.getElementById('total-interest');
+
+// Math logic for Monthly Compound Interest
+function calculateGrowth() {
+    let P = parseFloat(initialInput.value);
+    // Enforce the $5 minimum requirement smoothly in the UI math
+    if (isNaN(P) || P < 5) P = 5; 
+
+    const PMT = parseFloat(monthlyInput.value) || 0;
+    const t = parseInt(yearsInput.value);
+    const annualRate = parseFloat(rateInput.value) / 100;
+    
+    const n = 12; // monthly compound intervals
+    const r = annualRate / n;
+    const totalMonths = n * t;
+
+    // Compound on initial principal: A = P(1 + r)^t
+    const compoundPrincipal = P * Math.pow((1 + r), totalMonths);
+
+    // Future value of standard monthly additions: PMT * [((1 + r)^t - 1) / r]
+    let compoundSeries = 0;
+    if (r > 0) {
+        compoundSeries = PMT * ((Math.pow((1 + r), totalMonths) - 1) / r);
+    } else {
+        compoundSeries = PMT * totalMonths;
+    }
+
+    const totalPortfolio = compoundPrincipal + compoundSeries;
+    const totalInvestedPrincipal = P + (PMT * totalMonths);
+    const totalInterestEarned = Math.max(0, totalPortfolio - totalInvestedPrincipal);
+
+    // Update Text inside the DOM
+    totalResult.innerText = formatCurrency(totalPortfolio);
+    totalPrincipalDisplay.innerText = formatCurrency(totalInvestedPrincipal);
+    totalInterestDisplay.innerText = formatCurrency(totalInterestEarned);
+}
+
+function formatCurrency(value) {
+    return '$' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
+// Attach event listeners to all sliders and inputs
+initialInput.addEventListener('input', calculateGrowth);
+monthlyInput.addEventListener('input', calculateGrowth);
+
+yearsInput.addEventListener('input', (e) => {
+    yearsVal.innerText = e.target.value;
+    calculateGrowth();
+});
+
+rateInput.addEventListener('input', (e) => {
+    rateVal.innerText = e.target.value;
+    calculateGrowth();
+});
+
+// Run calculation initially when page loads
+calculateGrowth();// Grab Modal Elements
+const signupModal = document.getElementById('signup-modal');
+const openSignupBtn = document.getElementById('open-signup-btn');
+const heroSignupBtn = document.getElementById('hero-signup-btn');
+const closeModalBtn = document.getElementById('close-modal-btn');
+const registrationForm = document.getElementById('registration-form');
+
+// Open Modal Logic
+function openModal() {
+    signupModal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevents background scroll
+}
+
+// Close Modal Logic
+function closeModal() {
+    signupModal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restores scroll
+}
+
+// Event Listeners
+openSignupBtn.addEventListener('click', openModal);
+heroSignupBtn.addEventListener('click', openModal);
+closeModalBtn.addEventListener('click', closeModal);
+
+// Close modal if user clicks gray backdrop outside the container box
+window.addEventListener('click', (e) => {
+    if (e.target === signupModal) {
+        closeModal();
+    }
+});
+
+// Intercept form completion
+registrationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const userName = document.getElementById('full-name').value;
+    const userRisk = document.getElementById('risk-profile').value;
+    const is2faActive = document.getElementById('tfa-toggle').checked;
+
+    alert(`Success! Account created for ${userName}.\nYour strategy profile has been set to: ${userRisk.toUpperCase()}.\nTwo-Factor Status: ${is2faActive ? 'ENABLED' : 'DISABLED'}`);
+    
+    closeModal();
+    registrationForm.reset();
+});
